@@ -1,7 +1,8 @@
 
+
 const passport=require('passport');
 const googlestrategy=require('passport-google-oauth20');
-
+const user=require('../models/user');
 
 passport.use(
     new googlestrategy({
@@ -10,7 +11,20 @@ passport.use(
         clientSecret:"yyUrhOhPXrNlwSK6fvgcVmaa"
     } ,(acessToken,refreshToken,profile,done)=>
     {
-        console.log(profile);
-
+   
+           user.findOne({googleid:profile.id}).then((currentuser)=>
+           {
+               if(currentuser)
+               {
+                  done(null,currentuser);
+               }
+               else 
+               {
+                   user.create({name:profile.displayName,googleid:profile.id}).then((newuser)=>
+                   {
+                       console.log(newuser);
+                   }).catch((err)=>console.log (err))
+               }
+           }).catch((err)=>console.log(err));
     })
 );

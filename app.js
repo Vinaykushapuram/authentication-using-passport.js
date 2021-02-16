@@ -20,10 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //connecting to database
-mongoose.connect('mongodb+srv://vinay:vinay@oauth@oauth.lcpxu.mongodb.net/oauth?retryWrites=true&w=majority',
-(err)=>
+mongoose.connect('mongodb+srv://vinay:vinay@oauth@oauth.lcpxu.mongodb.net/oauth?retryWrites=true&w=majority',()=>
 {
-if(!err)console.log('connected to mongodb successfully');
+  console.log('connected to mongodb');
 }
 )
 
